@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="it.polito.tdp.meteo.MeteoController">
+  <!-- TODO Add Nodes -->
+  <center>
+    <VBox prefHeight="-1.0" prefWidth="-1.0" spacing="5.0">
+      <children>
+        <HBox prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
+          <children>
+            <Label text="Mese" />
+            <ChoiceBox fx:id="boxMese">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ChoiceBox>
+            <Button id="btnCerca" fx:id="btnUmidita" mnemonicParsing="false" text="Umidità" />
+          </children>
+        </HBox>
+        <HBox prefHeight="-1.0" prefWidth="-1.0" spacing="10.0">
+          <children>
+            <Label text="Sequenza ottimale delle città" />
+            <Button fx:id="btnCalcola" mnemonicParsing="false" text="Calcola" />
+          </children>
+        </HBox>
+        <TextArea fx:id="txtResult" disable="false" editable="false" prefWidth="-1.0" wrapText="true" />
+      </children>
+      <BorderPane.margin>
+        <Insets bottom="5.0" left="5.0" right="5.0" />
+      </BorderPane.margin>
+    </VBox>
+  </center>
+  <top>
+    <Label text="Meteo (Turno B)">
+      <font>
+        <Font name="System Bold" size="18.0" />
+      </font>
+      <BorderPane.margin>
+        <Insets bottom="10.0" />
+      </BorderPane.margin>
+    </Label>
+  </top>
+</BorderPane>
