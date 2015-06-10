@@ -17,6 +17,8 @@ public class Optimizer {
 
 	private final double C = 100; // euro
 	private final double k = 1.0; // euro per %umidità
+	
+	private final int maxDaysPerCity = 12 ;
 
 	private int daysMax;
 
@@ -41,14 +43,17 @@ public class Optimizer {
 		path.add(0, "Torino");
 		cost = k * model.getUmidita("Torino", mese, 1);
 		recursive(path, 1, mese, cost);
+		path.remove(0) ;
 
 		path.add(0, "Milano");
 		cost = k * model.getUmidita("Milano", mese, 1);
 		recursive(path, 1, mese, cost);
+		path.remove(0) ;
 
 		path.add(0, "Genova");
 		cost = k * model.getUmidita("Genova", mese, 1);
 		recursive(path, 1, mese, cost);
+		path.remove(0) ;
 
 		return bestPath;
 
@@ -57,26 +62,34 @@ public class Optimizer {
 	private void recursive(List<String> path, int giorno, Month mese,
 			double cost) {
 
+		// sono alla fine del mese
 		if (giorno == daysMax) {
-			// sono alla fine del mese
 			if (cost < bestCost) {
 				bestCost = cost;
 				bestPath = new ArrayList<String>(path);
+				
+				System.out.println(path) ;
+				System.out.println(cost) ;
+
 			}
 			return;
 		}
+		
+		// non vale la pena di continuare? (già superato il best senza ancora avere finito il mese)
+		if(cost > bestCost)
+			return ;
 
 		for (String proxCitta : mieCitta) {
 			double proxCosto = cost;
 
-			if (contaCitta(proxCitta, path) < 12) {
+			if (contaCitta(proxCitta, path) < maxDaysPerCity ) {
 				if (!path.get(giorno - 1).equals(proxCitta))
 					proxCosto = proxCosto + C;
 				proxCosto = proxCosto + k
 						* model.getUmidita(proxCitta, mese, giorno + 1);
-				path.add(giorno - 1, proxCitta);
+				path.add(giorno, proxCitta);
 				recursive(path, giorno + 1, mese, proxCosto);
-				path.remove(giorno - 1);
+				path.remove(giorno);
 			}
 		}
 	}
