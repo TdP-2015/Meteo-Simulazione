@@ -40,6 +40,17 @@ public class Model {
 
 		return umidita;
 	}
+	
+	public double getUmidita(String citta, Month mese, int giorno) {
+		for( Situazione s: situazioni) {
+			if( s.getLocalita().equals(citta) &&
+					s.getData().getMonth()==mese &&
+					s.getData().getDayOfMonth()==giorno ) {
+				return s.getUmidita() ;
+			}
+		}
+		return 0.0 ; // dato mancante
+	}
 
 	public void loadSituazioni() {
 		MeteoDAO dao = new MeteoDAO();
